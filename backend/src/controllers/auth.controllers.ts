@@ -2,7 +2,7 @@ import { RequestHandler, Response } from "express";
 import { LoginSchema, RegisterSchema } from "../schemas/user.schema";
 import UserModel from "../models/user.model";
 import { generateToken } from "../utils/jwt";
-import { AuthRequest } from "../middleware/auth.middleware";
+import { AuthRequest } from "../types/auth.types";
 
 export const register: RequestHandler = async (req, res) => {
   // parse request body

@@ -7,10 +7,9 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
       message: "Missing required fields",
       error: z.flattenError(err),
     });
-  }
-
-  if (err instanceof Error) {
+  } else {
     console.log(err);
   }
+
   next();
 };

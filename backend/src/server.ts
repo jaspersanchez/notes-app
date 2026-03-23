@@ -1,20 +1,25 @@
 import "dotenv/config";
 import express from "express";
+import cors from "cors";
 import { env } from "./utils/env";
 import { logger } from "./middleware/logger.middleware";
 import { errorHandler } from "./middleware/error.middleware";
 
 import authRoutes from "./routes/auth.routes";
+import noteRoutes from "./routes/note.routes";
+
 import connectDB from "./config/db";
 
 const port = env.port;
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(logger);
 
 app.use("/api/auth", authRoutes);
+app.use("/api/notes", noteRoutes);
 
 app.use(errorHandler);
 

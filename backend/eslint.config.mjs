@@ -5,7 +5,6 @@ import tseslint from "typescript-eslint";
 export default defineConfig(
   eslint.configs.recommended,
   tseslint.configs.recommendedTypeChecked,
-  tseslint.configs.stylisticTypeChecked,
   {
     ignores: ["eslint.config.mjs"],
   },

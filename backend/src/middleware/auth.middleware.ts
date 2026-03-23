@@ -1,10 +1,7 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import { verifyToken } from "../utils/jwt";
-import UserModel, { IUser } from "../models/user.model";
-
-export interface AuthRequest extends Request {
-  user?: IUser;
-}
+import UserModel from "../models/user.model";
+import { AuthRequest } from "../types/auth.types";
 
 export const protect = async (
   req: AuthRequest,
@@ -14,7 +11,7 @@ export const protect = async (
   const authHeader = req.headers.authorization;
 
   if (!authHeader?.startsWith("Bearer ")) {
-    res.status(400).json({ message: "Not authorized" });
+    res.status(401).json({ message: "Not authorized" });
     return;
   }
 
@@ -22,17 +19,10 @@ export const protect = async (
     const token = authHeader.split(" ")[1];
     const decoded = verifyToken(token) as { id: string };
 
-    if (!("id" in decoded)) {
-      res.status(401).json({ message: "Invalid token" });
-      return;
-    }
-
-    console.log(decoded);
-
     const user = await UserModel.findById(decoded.id).select("-password");
 
     if (!user) {
-      res.status(400).json({ message: "User not found" });
+      res.status(401).json({ message: "User not found" });
       return;
     }
 
