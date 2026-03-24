@@ -3,10 +3,9 @@ import z, { ZodError } from "zod";
 
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   if (err instanceof ZodError) {
-    res.status(400).json({
-      message: "Missing required fields",
-      error: z.flattenError(err),
-    });
+    const error = z.prettifyError(err);
+
+    res.status(400).json(error);
   } else {
     console.log(err);
   }

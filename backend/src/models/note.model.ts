@@ -9,7 +9,7 @@ export interface INote extends mongoose.Document {
 const noteSchema = new mongoose.Schema<INote>(
   {
     title: { type: String, required: true, trim: true },
-    body: { type: String, default: "" },
+    body: { type: String, required: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // ref to User model
   },
   {

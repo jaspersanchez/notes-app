@@ -7,7 +7,9 @@ import { AuthRequest, AuthRequestWithId } from "../types/auth.types";
 export const getNotes = async (req: AuthRequest, res: Response) => {
   const { _id } = req.user!;
 
-  const notes = await NoteModel.find({ user: _id });
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const notes = await NoteModel.find({ user: _id }).sort({ createdAt: -1 });
 
   res.json(notes);
 };
